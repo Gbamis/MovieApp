@@ -24,6 +24,15 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
+      # commits changes
+      - name: Commit Uncommitted Changes (if any)
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions Bot"
+          git add .
+          git commit -m "CI: Commit build artifacts" || echo "No changes to commit"
+          git push
+
       # Installs unity
       - name: Set up Unity
         uses: game-ci/unity-builder@v3

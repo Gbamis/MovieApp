@@ -14,22 +14,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Activate Unity License
+        run: |
+          echo "$UNITY_LICENSE" > Unity_v2017.ulf
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+      # Installs unity
       - name: Set up Unity
         uses: game-ci/unity-builder@v3
         with:
           unityVersion: 6000.0.36f1
           targetPlatform: Android
 
+       # builds apk
       - name: Build project
-        uses: game-ci/unity-builder@v3
+        uses: game-ci/unity-builder@v2
         with:
           targetPlatform: Android
-
+          
+       # uploads apk
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: MovieApp
           path: build/android/*.apk
@@ -53,7 +63,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: release/*.apk
-          release_name: "Release v1.0${{ github.run.number}"
+          release_name: "Release v1.0${{ github.run.number}}"
           body: "Automated apk release"
           draft: false
           prerelease: false

@@ -1,7 +1,7 @@
 # MovieApp
 System design interview submission
 1. Setup Instructions
-   - Download the MovieApp apk and install (https://drive.google.com/file/d/1CC9USE-ImGDNDY8MsS01LRjgRvfMfTxM/view?usp=sharing)
+   - Download the MovieApp apk and install  (https://drive.google.com/file/d/1CC9USE-ImGDNDY8MsS01LRjgRvfMfTxM/view?usp=sharing)
    - Launch app with internet connection
 2. Architecture Overview
    - UI screens are managed and controlled using a state machine "UIController". This ensures smooth Entry and Exit screen transistions.
@@ -9,4 +9,5 @@ System design interview submission
    - Network responses are Deserialized using JsonUility.
 3. Known Issues
    - Search results are filtered to prevent display of results with empty data
-   
+4. Possible Improvements
+   - UI Pooling of movie card ui items to improve rendering of large query results.

@@ -14,20 +14,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Installs unity
       - name: Set up Unity
         uses: game-ci/unity-builder@v3
         with:
           unityVersion: 6000.0.36f1
           targetPlatform: Android
 
+       # builds apk
       - name: Build project
-        uses: game-ci/unity-builder@v3
+        uses: game-ci/unity-builder@v2
         with:
           targetPlatform: Android
-
+          
+       # uploads apk
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v3
         with:

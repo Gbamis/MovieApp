@@ -41,6 +41,14 @@ jobs:
           key: Library-Android-${{ github.run_id }}
           restore-keys: |
             Library-Android-
+            
+      # Installs unity
+      - name: Install and Activate Unity
+        uses: game-ci/unity-activate@v2
+        with:
+          unityVersion: 6000.0.36f1
+          activationMethod: file
+          unityLicense: ${{ secrets.UNITY_LICENSE }}
           
       # build  apk
       - name: Build Unity Project for Android

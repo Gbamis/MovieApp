@@ -46,7 +46,7 @@ jobs:
       - name: Install and Activate Unity
         uses: game-ci/unity-activate@v2
         with:
-          unityVersion: 6000.0.36f1
+          unityVersion: 2022.3.4f1
           activationMethod: file
           unityLicense: ${{ secrets.UNITY_LICENSE }}
           

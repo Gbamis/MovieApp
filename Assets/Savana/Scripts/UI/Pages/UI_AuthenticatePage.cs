@@ -7,26 +7,22 @@ using ModestTree;
 
 namespace Savana.Movie
 {
-    /// <summary>
-    /// - Handles the authentication of the app with the api using an API Key
-    /// - Fetches a list of movies  ahead for use by the Home screen
-    /// </summary>
     public class UI_AuthenticatePage : MonoBehaviour, UIState
     {
         private UIController _controller;
-        [SerializeField] private bool showMenu; // should menubar be active on this page
-        [SerializeField] private GameObject menuBar; // menubar group
-        [SerializeField] private GameObject apiInputPanel; // panel for API key input 
-        [SerializeField] private TMP_InputField apiInputKey; // input field for API key
+        [SerializeField] private bool showMenu;
+        [SerializeField] private GameObject menuBar;
+        [SerializeField] private GameObject apiInputPanel;
+        [SerializeField] private TMP_InputField apiInputKey;
 
-        [SerializeField] private Button getStartedBtn; // button which triggers the panel for API key inputfield
-        [SerializeField] private Button proceedBtn; 
+        [SerializeField] private Button getStartedBtn;
+        [SerializeField] private Button proceedBtn;
         [SerializeField] private GameObject loadingBar;
         [SerializeField] private RectTransform continueRect;
 
 
         [SerializeField] private Image backgroundImage;
-        [SerializeField] List<Sprite> collages;// random images to display when application loads the authenticate scree
+        [SerializeField] List<Sprite> collages;
 
         public void AttachTo(UIController controller)
         {
@@ -49,6 +45,9 @@ namespace Savana.Movie
             getStartedBtn.onClick.AddListener(GetStartedBtnClicked);
             proceedBtn.onClick.AddListener(ContinueBtnClicked);
 
+
+
+            //AnimateContinueBtn().Forget();
         }
         public void Exit()
         {
@@ -68,8 +67,6 @@ namespace Savana.Movie
 
         private void ContinueBtnClicked()
         {
-            //ensures the api key input is valid
-
             string key = apiInputKey.text;
             key = key.Trim();
 
@@ -81,8 +78,6 @@ namespace Savana.Movie
             loadingBar.SetActive(true);
             proceedBtn.gameObject.SetActive(false);
 
-            //make a network request using a Network service
-            //pass a success callback and a failure callback to handle network response
             NetworkManager.Request_Get_NowPlaying(key, LoadHomePage, ErrorConnecting);
         }
 
@@ -94,7 +89,7 @@ namespace Savana.Movie
         }
 
         private void LoadHomePage() => _controller.ChangeState<UI_HomePage>();
-
+        
 
     }
 

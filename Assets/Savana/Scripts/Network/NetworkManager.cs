@@ -18,11 +18,7 @@ namespace Savana.Movie
 
 
         public static List<Response_MovieDetail> response_NowPlaying = new();
-        
-        //fetch NowPlaying list of movies
-        //accepts a valid api key
-        //method callback for  network suceess and error
-        //page number to allow searching within other pages within the movie list database
+
         public static async void Request_Get_NowPlaying(string key, Action OnResults = null, Action OnError = null, int page = 1)
         {
             string bearer = "Bearer " + key;
@@ -45,9 +41,10 @@ namespace Savana.Movie
                 HttpResponseMessage response = await Client.SendAsync(request);
                 int statusCode = (int)response.StatusCode;
                 string responseBody = await response.Content.ReadAsStringAsync();
+                KEY = key;
 
-                KEY = key;// cache api key for further api calls
-
+                // Debug.Log($"Status Code: {statusCode}");
+                // Debug.Log($"Response Body: {responseBody}");
 
                 if (statusCode == 200)
                 {
@@ -76,6 +73,8 @@ namespace Savana.Movie
             }
         }
 
+
+
         public static async void Request_SearchforMovie_ByKeyword(string keyword,
         Action<List<Response_MovieDetail>> OnResults = null, Action OnError = null, int page = 1)
         {
@@ -100,6 +99,8 @@ namespace Savana.Movie
                 int statusCode = (int)response.StatusCode;
                 string responseBody = await response.Content.ReadAsStringAsync();
 
+                //Debug.Log($"Status Code: {statusCode}");
+                //Debug.Log($"Response Body: {responseBody}");
 
                 if (statusCode == 200)
                 {
@@ -168,7 +169,6 @@ namespace Savana.Movie
             return details;
         }
 
-        //Download a poster for a movie through the filepath attribute of a movie detail
         private static async Task DownloadPosterForMovie(Response_MovieDetail movie)
         {
             string bearer = "Bearer " + KEY;

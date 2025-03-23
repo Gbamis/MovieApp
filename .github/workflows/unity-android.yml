@@ -12,11 +12,6 @@ jobs:
   build:
     name: Build Android APK
     runs-on: ubuntu-latest
-    env:
-      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-      ANDROID_KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASS }}
-      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-      ANDROID_KEY_PASS: ${{ secrets.ANDROID_KEY_PASS }}
 
     steps:
       - name: Checkout repository
@@ -36,14 +31,31 @@ jobs:
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: android-apk
+          name: MovieApp
           path: build/android/*.apk
 
-      - name: Deploy to Google Play (Optional)
-        uses: r0adkll/upload-google-play@v1
+  release:
+    name: Release APK
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download APK
+        uses: actions/checkout@v4
         with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: com.yourcompany.yourgame
-          releaseFiles: build/android/*.apk
-          track: internal
-          status: draft
+          name: MovieApp
+          path: release
+
+      - name: Create A github Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*.apk
+          release_name: "Release v1.0${{ github.run.number}"
+          body: "Automated apk release"
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

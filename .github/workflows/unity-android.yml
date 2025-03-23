@@ -31,8 +31,6 @@ jobs:
         run: |
           echo "${{ secrets.UNITY_LICENSE }}" > Unity_v6000.ulf
           echo "UNITY_LICENSE=$(cat Unity_v6000.ulf)" >> $GITHUB_ENV
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           
       # cache for faster builds
       - name: Cache Unity Library

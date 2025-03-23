@@ -1,0 +1,49 @@
+name: Unity Android Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+    env:
+      UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      ANDROID_KEYSTORE_PASS: ${{ secrets.ANDROID_KEYSTORE_PASS }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASS: ${{ secrets.ANDROID_KEY_PASS }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Unity
+        uses: game-ci/unity-builder@v3
+        with:
+          unityVersion: 6000.0.36f1
+          targetPlatform: Android
+
+      - name: Build project
+        uses: game-ci/unity-builder@v3
+        with:
+          targetPlatform: Android
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-apk
+          path: build/android/*.apk
+
+      - name: Deploy to Google Play (Optional)
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          packageName: com.yourcompany.yourgame
+          releaseFiles: build/android/*.apk
+          track: internal
+          status: draft

@@ -48,7 +48,7 @@ jobs:
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
-          targetPlatform: android
+          targetPlatform: Android
           
        # uploads apk
       - name: Upload APK Artifact

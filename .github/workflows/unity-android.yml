@@ -72,21 +72,30 @@ jobs:
       - name: Ensure Git Tag Exists
         run: |
           TAG="v1.0.${{ github.run_number }}"
-          if [ -z "$(git tag --points-at HEAD)" ]; then
-            git tag $TAG
-            git push origin $TAG
-            echo "Created new tag: $TAG"
+          
+          # Ensure Git is configured
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      
+          # Fetch tags to avoid "tag already exists" errors
+          git fetch --tags
+      
+          # Create tag if it doesn’t exist
+          if [ -z "$(git tag -l "$TAG")" ]; then
+            git tag "$TAG"
+            git push origin "$TAG"
+            echo "Created and pushed new tag: $TAG"
           else
-            echo "Tag already exists."
+            echo "Tag already exists: $TAG"
           fi
 
-      - name: Create A github Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: release/*.apk
-          release_name: "Release v1.0${{ github.run.number}}"
-          body: "Automated apk release"
+          tag_name: v1.0.${{ github.run_number }}  # Use the newly created tag
+          name: "Release v1.0.${{ github.run_number }}"
           draft: false
           prerelease: false
+          files: Build/Android/Movie.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

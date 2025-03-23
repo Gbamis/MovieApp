@@ -9,5 +9,5 @@ System design interview submission
    - Network responses are Deserialized using JsonUility.
 3. Known Issues
    - Search results are filtered to prevent display of results with empty data
-
-   
+4. Possible Improvements
+   - UI Pooling of movie card ui items to improve rendering of large query results.

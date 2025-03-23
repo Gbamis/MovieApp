@@ -8,12 +8,12 @@ namespace Savana.Movie
     public class UI_MovieDetailsPage : MonoBehaviour, UIState
     {
         private UIController _controller;
-        [SerializeField] private bool showMenu;
-        [SerializeField] private GameObject menuBar;
+        [SerializeField] private bool showMenu; // should menubar be active on this page
+        [SerializeField] private GameObject menuBar; // menubar group
         [SerializeField] private Button backBtn;
 
-        [SerializeField] private Image poster;
-        [SerializeField] private TextMeshProUGUI titleTxt;
+        [SerializeField] private Image poster; //display movie poster
+        [SerializeField] private TextMeshProUGUI titleTxt; //display movie title
         [SerializeField] private TextMeshProUGUI releaseDataTxt;
         [SerializeField] private TextMeshProUGUI overviewTxt;
         [SerializeField] private TextMeshProUGUI voteAvgTxt;
@@ -36,7 +36,7 @@ namespace Savana.Movie
             menuBar.SetActive(showMenu);
             gameObject.SetActive(true);
 
-             Fade().Forget();
+            Fade().Forget(); // UI Entry animations
         }
         public void Exit()
         {
@@ -47,10 +47,7 @@ namespace Savana.Movie
         public void Pause() { }
         public void Resume() { }
 
-        private void HomePage()
-        {
-            _controller.ChangeState<UI_HomePage>();
-        }
+        private void HomePage() => _controller.ChangeState<UI_HomePage>();
 
         public void SetData(Sprite img, Response_MovieDetail result)
         {
@@ -65,7 +62,7 @@ namespace Savana.Movie
         {
             favButtonAlpha.alpha = 0;
             favButtonIcon.alpha = 0;
-            
+
             float step = 0;
             while (step < 1)
             {

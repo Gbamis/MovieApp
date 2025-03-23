@@ -26,12 +26,6 @@ jobs:
           git add .
           git commit -m "CI: Commit build artifacts" || echo "No changes to commit"
           git push
-
-      - name: Activate Unity License
-        run: |
-          echo "${{ secrets.UNITY_LICENSE }}" > Unity_v6000.ulf
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           
       # cache for faster builds
       - name: Cache Unity Library

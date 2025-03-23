@@ -18,13 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Activate Unity License
-        run: |
-          echo "${{ secrets.UNITY_LICENSE }}" > Unity_v6000.ulf
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-
-      # commits changes
+       # commits changes
       - name: Commit Uncommitted Changes (if any)
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -33,18 +27,26 @@ jobs:
           git commit -m "CI: Commit build artifacts" || echo "No changes to commit"
           git push
 
-      # Installs unity
-      - name: Set up Unity
-        uses: game-ci/unity-builder@v3
+      - name: Activate Unity License
+        run: |
+          echo "${{ secrets.UNITY_LICENSE }}" > Unity_v6000.ulf
+          echo "UNITY_LICENSE=$(cat Unity_v6000.ulf)" >> $GITHUB_ENV
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          
+      # cache for faster builds
+      - name: Cache Unity Library
+        uses: actions/cache@v3
         with:
-          unityVersion: 6000.0.36f1
-          targetPlatform: Android
-
-       # builds apk
-      - name: Build project
-        uses: game-ci/unity-builder@v2
-        with:
-          targetPlatform: Android
+          path: Library
+          key: Library-Android-${{ github.run_id }}
+          restore-keys: |
+            Library-Android-
+            
+      # build  apk
+      - name: Build Unity Project for Android
+        run: |
+          unity-editor -batchmode -nographics -quit -buildTarget Android -projectPath ./ -logFile build.log
           
        # uploads apk
       - name: Upload APK Artifact

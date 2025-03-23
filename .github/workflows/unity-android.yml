@@ -53,7 +53,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: release/*.apk
-          release_name: "Release v1.0${{ github.run.number}"
+          release_name: "Release v1.0${{ github.run.number}}"
           body: "Automated apk release"
           draft: false
           prerelease: false

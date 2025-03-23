@@ -44,7 +44,7 @@ jobs:
             
       # Installs unity
       - name: Install and Activate Unity
-        uses: game-ci/unity-activate@v3
+        uses: game-ci/unity-activate@v2
         with:
           unityVersion: 2022.3.4f1
           activationMethod: file

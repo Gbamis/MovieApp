@@ -12,7 +12,10 @@ namespace Savana.Movie
         public void Resume();
     }
 
-    public class UIController : MonoBehaviour
+    /// <summary>
+    /// This class handles transition across screens using a state pattern
+    /// </summary>
+    public class UIController 
     {
         private UIState _currentMainState;
         private Stack<UIState> _currentSubStates = new();

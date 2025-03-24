@@ -5,15 +5,15 @@ using ModestTree;
 
 namespace Savana.Movie
 {
+    
     public class UI_HomePage : MonoBehaviour, UIState
     {
         private UIController _controller;
-
-        [SerializeField] private UI_NowTrending nowTrendingPanel;
-        [SerializeField] private UI_SearchGroup searchPanel;
+        [SerializeField] private UI_NowTrending nowTrendingPanel; //Displays a list of trending movies
+        [SerializeField] private UI_SearchGroup searchPanel; //Encapsulates a movie search functionality
 
         [Header("Searching")]
-        [SerializeField] private TMP_InputField searchInput;
+        [SerializeField] private TMP_InputField searchInput; 
         [SerializeField] private Button searchBtn;
         
 

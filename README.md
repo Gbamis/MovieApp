@@ -1,7 +1,7 @@
 # MovieApp
 System design interview submission
 1. Setup Instructions
-   - Download the MovieApp apk and install  (https://drive.google.com/file/d/1CC9USE-ImGDNDY8MsS01LRjgRvfMfTxM/view?usp=sharing)
+   - Download the MovieApp apk and install (https://drive.google.com/file/d/1logBxbkN7ZcBEu_AIcD3JkiXxm3g3jUb/view?usp=sharing)
    - Launch app with internet connection
 2. Architecture Overview
    - UI screens are managed and controlled using a state machine "UIController". This ensures smooth Entry and Exit screen transistions.
